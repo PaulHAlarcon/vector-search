@@ -6,3 +6,4 @@ azure-ai-vision==0.15.1b1
 pandas==2.0.3
 numpy==1.24.4
 opencv-python==4.9.0.80
+tensorflow==2.15.0

@@ -4,7 +4,7 @@ from io import BytesIO
 import base64
 
 from lib.index import  AzureSearchIndex
-from lib.Vectorization import Vision_Florence
+from lib.vectorization import Vision_Florence
 
 #from PIL import Image
 # ------ load env variable ------# 

@@ -4,7 +4,7 @@ from tqdm import tqdm
 import re
 
 from lib.orm import Documents
-from lib.Vectorization import MobileNetV2_features, Vision_Florence
+from lib.vectorization import MobileNetV2_features, Vision_Florence
 
 
 def mobileNetV2_multi_feature(root_dir):
