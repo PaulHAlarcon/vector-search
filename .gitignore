@@ -1,0 +1,8 @@
+*.png
+*.jpg
+*.jpeg
+.env
+*__pycache__
+notebook/
+*.ann
+*.json

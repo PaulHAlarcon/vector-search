@@ -1,0 +1,8 @@
+ultralytics==8.0.237
+python-dotenv==1.0.0
+tqdm==4.66.1
+azure-storage-blob==12.19.0
+azure-ai-vision==0.15.1b1
+pandas==2.0.3
+numpy==1.24.4
+opencv-python==4.9.0.80
