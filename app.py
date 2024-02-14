@@ -10,7 +10,6 @@ import base64
 import requests
 from st_clickable_images import clickable_images
 
-from streamlit_float import *
 import time
 # initialize float feature/capability
 
@@ -30,7 +29,7 @@ if 'clicked' not in st.session_state:
     st.session_state['clicked'] =-1
 
 
-float_init()
+
 
 
 def search(emb,k=1):
