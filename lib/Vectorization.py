@@ -4,6 +4,8 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # or any {'0', '1', '2'}
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
 from keras.applications.mobilenet_v2 import MobileNetV2, preprocess_input
+#from keras.applications.mobilenet import preprocess_input
+from keras.models import load_model
 from keras.preprocessing import image
 from numpy import expand_dims ,squeeze
 from requests import post
@@ -12,7 +14,7 @@ import json
 
 class MobileNetV2_features:    
     def  __init__(self) -> None:
-        self.model = MobileNetV2(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
+        self.model = MobileNetV2(weights='imagenet', include_top=False, input_shape=(224, 224, 3))  #load_model(os.getenv('model_wight'))
         self.collection_featurs=[]
         pass
     
@@ -52,15 +54,18 @@ class Vision_Florence:
         if application != None:
             self.set_application(application)
       
-     def collection_predic(self,root_dir):   #img_collection
+     def collection_predic(self,root_dir,type_):   #img_collection
         ''''
         var: root_dir  -> type string -
            - must be only a dir Path not byte , test or url  
         descrition: def collection_predic()
            - This function creates a collection of embedding vectors
         '''
-        for dir_na_eb in os.listdir(root_dir):
-            self.collection_embedding.append(self.predict(os.path.join(root_dir,dir_na_eb),application='path'))
+        if type_=='path':
+            root_dir=os.listdir(root_dir)
+
+        for dir_na_eb in root_dir:
+            self.collection_embedding.append(self.predict(os.path.join(root_dir,dir_na_eb),application=type_))
 
      def set_application(self,application : str):
         '''
@@ -94,9 +99,9 @@ class Vision_Florence:
 
         if application != None:   
             self.set_application(application)
-
+        
         response = post(
-                  url=self.vec_img_url if application !='text' else self.vec_txt_url,
+                  url=self.vec_img_url if self.application !='text' else self.vec_txt_url,
                   headers=self.headers, 
                   data= json.dumps({self.application: source}) if self.application not in self.octet_stream_list  else source)
         return response.json()['vector']
