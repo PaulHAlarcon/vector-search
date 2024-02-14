@@ -85,7 +85,7 @@ with st.sidebar:
         else:
             imge_bytes=0
             with col[1]:
-               st.image('Data\log_img.jpg', caption=" ", use_column_width=True)
+               st.image('https://static.vecteezy.com/system/resources/previews/023/506/653/original/photo-upload-icon-editable-vector.jpg', caption=" ", use_column_width=True)
     else:
             #st.empty()
             st.info('You can enhance your search by uploading an image.')
