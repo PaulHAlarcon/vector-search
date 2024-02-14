@@ -5,9 +5,10 @@ from azure.search.documents.models import VectorizedQuery
 from annoy import AnnoyIndex
 from os import getenv ,listdir ,path
 from  json import dump ,load
+import numpy as np
 
 class LocalAnnoyIndex:
-     def __init__(self,function_embedding ,vector_size=62720,metric='euclidean') -> None:
+     def __init__(self,function_embedding=None ,vector_size=62720,metric='euclidean') -> None:
           self.annoy_index = AnnoyIndex(vector_size, metric=metric )
           self.function_embedding=function_embedding
      
@@ -61,7 +62,7 @@ class AzureSearchIndex:
         print(f' {result.name} created')
 
     def vector_search(self,vectr_embeddign ,k_n=3):
-        vector_query = VectorizedQuery(vector=vectr_embeddign, k_nearest_neighbors=k_n, fields="Vector_img")
+        vector_query = VectorizedQuery(vector=vectr_embeddign, k_nearest_neighbors=k_n, fields="Vector_img" )
         results = self.client.search(  
             search_text=None,  
             vector_queries= [vector_query],
@@ -71,3 +72,15 @@ class AzureSearchIndex:
         
     def semantic_search(self,text_to_serach):
         return self.client.search(search_text=text_to_serach)
+    
+    def vector_hybrid_search(self,test,vectr_embeddign ,k_n=3,exhaustive=False):
+        vector_query2 = VectorizedQuery(vector=vectr_embeddign, k_nearest_neighbors=k_n, fields="Vector_img",exhaustive=exhaustive)
+  
+        results = self.client.search( 
+            search_text=test, 
+            search_fields=['captions'] ,
+            vector_queries= [vector_query2],
+            top=k_n,
+            select=['Vector_img','captions','URL','id'],
+        )  
+        return results
