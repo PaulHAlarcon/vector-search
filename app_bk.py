@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit_selectable_image_gallery import image_gallery
 from lib.index import  AzureSearchIndex ,LocalAnnoyIndex
-from lib.vectorization import Vision_Florence
+from lib.Vectorization import Vision_Florence
 from lib.Analyze import ImageAnalyzer
 from io import BytesIO
 from dotenv import load_dotenv
