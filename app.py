@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_selectable_image_gallery import image_gallery
+#from streamlit_selectable_image_gallery import image_gallery
 from lib.index import  AzureSearchIndex ,LocalAnnoyIndex
 from lib.Vectorization import Vision_Florence
 from lib.Analyze import ImageAnalyzer
