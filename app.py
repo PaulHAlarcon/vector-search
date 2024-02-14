@@ -9,10 +9,9 @@ import os
 import base64
 import requests
 from st_clickable_images import clickable_images
-
+import numpy as np
 import time
 # initialize float feature/capability
-
 
 
 load_dotenv()
@@ -27,9 +26,6 @@ if 'url_img_list' not in st.session_state:
 
 if 'clicked' not in st.session_state:
     st.session_state['clicked'] =-1
-
-
-
 
 
 def search(emb,k=1):
@@ -70,7 +66,6 @@ with st.sidebar:
     loadimg = st.toggle('load Image')
     col =st.columns(2)
     
-         
     if loadimg:
         with col[0]:
             uploaded_file = st.file_uploader("Upload Image", type=["jpg", "jpeg", "png"])
@@ -89,10 +84,11 @@ with st.sidebar:
     else:
             #st.empty()
             st.info('You can enhance your search by uploading an image.')
+
     #--------------------------Send Button 
     button_check = st.button("Send")
     #-------------- ------------Send Button 
-import numpy as np
+
 ##--------------------------Task
 if button_check : # Check condition Send Button
      try:
@@ -125,10 +121,13 @@ if button_check : # Check condition Send Button
             #with st.sidebar:
             #     st.write(url_img_list)
      except:
-        st.warning('An issue arose.')
+        st.warning("An issue arose. Maybe there's a problem with the search text or image \n ")
+        if loadimg:
+           st.warning("If you don't insert an image, disable the Load Image flag")
         pass
 else:
     st.info('The results will be displayed in this space.')
+    st.info('To get started you can search "shoes", "t-shirts" or "bags"')
 
 if st.session_state['url_img_list'] != []:
     with st.container(border=True):
