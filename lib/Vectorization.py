@@ -1,12 +1,14 @@
 
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # or any {'0', '1', '2'}
-os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
-
-from keras.applications.mobilenet_v2 import MobileNetV2, preprocess_input
-#from keras.applications.mobilenet import preprocess_input
-from keras.models import load_model
-from keras.preprocessing import image
+try:
+   os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # or any {'0', '1', '2'}
+   os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+   from keras.applications.mobilenet_v2 import MobileNetV2, preprocess_input
+   #from keras.applications.mobilenet import preprocess_input
+   from keras.models import load_model
+   from keras.preprocessing import image
+except:
+    pass
 from numpy import expand_dims ,squeeze
 from requests import post
 import json
