@@ -11,3 +11,4 @@ annoy
 opencv-python==4.9.0.80
 streamlit==1.29.0
 st_clickable_images
+streamlit_selectable_image_gallery
