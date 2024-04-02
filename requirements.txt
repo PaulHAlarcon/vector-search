@@ -12,3 +12,8 @@ opencv-python==4.9.0.80
 streamlit==1.29.0
 st_clickable_images
 streamlit_selectable_image_gallery
+langchain==0.1.7
+langchain==0.1.7
+langchain-community==0.0.20
+langchain-core==0.1.38
+langchain-openai==0.1.1

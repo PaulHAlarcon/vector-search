@@ -50,3 +50,6 @@ class ImageAnalyzer:
                     objs=['']
 
         return captions,tags,objs
+    
+if __name__=='__main__':
+     ImageAnalyzer
