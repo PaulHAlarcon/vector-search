@@ -19,7 +19,7 @@ class gpt_function_call:
         self.query_function = [convert_to_openai_tool(function)['function']]
         self.function = function
         self.llm = AzureChatOpenAI(model=model,temperature=0)
-        self.function_chain(self)
+        self.function_chain()
         pass
 
     def function_chain(self):
