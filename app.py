@@ -101,7 +101,6 @@ def main():
                 with col[1]:
                    st.image('https://static.vecteezy.com/system/resources/previews/023/506/653/original/photo-upload-icon-editable-vector.jpg', caption=" ", use_column_width=True)
         else:
-                #st.empty()
                 st.info('You can enhance your search by uploading an image.')
 
         #--------------------------Send Button 
@@ -119,8 +118,8 @@ def main():
                    result=search(img_emb,k=1)
                    urels = [x['URL'] for i,x in enumerate(result) if x['@search.score']>=0]
                    captions,tags,objs=st.session_state['ImageAnalyzer'].Analyzed(sourse = urels[0],source_file=False)
-                   text_key=st.session_state['gpt_function_call'].function_invoke(captions[0], keywords)
-                   text_emb=st.session_state['Florence'].predict(text_key,application='text')
+                   text_keys =st.session_state['gpt_function_call'].invoke({'image_description' : captions[0], 'user_text' : keywords } )
+                   text_emb=st.session_state['Florence'].predict(text_keys,application='text')
                    result=search(text_emb,k=12)
                    st.session_state['url_img_list'] = [x['URL'] for i,x in enumerate(result) if x['@search.score']>=0]
 
@@ -152,11 +151,7 @@ def main():
                  div_style={"display": "flex", "justify-content": "center", "flex-wrap": "wrap"},
                  img_style={"margin": "5px", "height": "200px"},
              )
-        #st.markdown('<a target="_blank" href="https://www.globo.com/">Access globo.com</a>', unsafe_allow_html=True)
-
-
-
-
+             
 if __name__ == '__main__':
     from streamlit.web import cli as stcli
     from streamlit import runtime
