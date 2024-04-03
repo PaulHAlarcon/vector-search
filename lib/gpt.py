@@ -3,6 +3,7 @@ from langchain_openai import AzureChatOpenAI
 from langchain.output_parsers.openai_functions import JsonOutputFunctionsParser
 #from langchain_core.output_parsers.openai_tools import JsonOutputToolsParser
 #import json
+from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.utils.function_calling import convert_to_openai_tool
 
 class gpt_function_call:
@@ -43,4 +44,27 @@ class gpt_function_call:
         '''
         return self.chain.invoke(arg)
 
+class gpt_ImageAnalyzer:
+    def __init__(self) -> None:
+        self.chat = AzureChatOpenAI(deployment_name="gpt4_vision", max_tokens=256)
+        pass
+    
+    def invoke(self,query,url):
+        ris =     self.chat.invoke(
+            [
+                HumanMessage(
+                    content=[
+                        {"type": "text", "text": query},
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": url,
+                                "detail": "auto",
+                            },
+                        },
+                    ]
+                )
+            ]
+        )       
+        return ris
 

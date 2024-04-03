@@ -82,10 +82,10 @@ def main():
         #------------------------Titole
         keywords = st.text_input('Query Text',value='')#
 
-        loadimg = st.toggle('load Image')
+        loading = st.toggle('load Image')
         col =st.columns(2)
 
-        if loadimg:
+        if loading:
             with col[0]:
                 uploaded_file = st.file_uploader("Upload Image", type=["jpg", "jpeg", "png"])
             # To read file as bytes:
@@ -112,18 +112,18 @@ def main():
          try:
             with st.status(" Search images..."):
                 st.write("Downloading data...")
-                if loadimg and keywords != '':
+                if loading and keywords != '':
                    text_emb=st.session_state['Florence'].predict(keywords,application='text')
                    img_emb=st.session_state['Florence'].predict(imge_bytes,application='bytes')
                    result=search(img_emb,k=1)
-                   urels = [x['URL'] for i,x in enumerate(result) if x['@search.score']>=0]
-                   captions,tags,objs=st.session_state['ImageAnalyzer'].Analyzed(sourse = urels[0],source_file=False)
+                   urls = [x['URL'] for i,x in enumerate(result) if x['@search.score']>=0]
+                   captions,tags,objs=st.session_state['ImageAnalyzer'].Analyzed(sourse = urls[0],source_file=False)
                    text_keys =st.session_state['gpt_function_call'].invoke({'image_description' : captions[0], 'user_text' : keywords } )
                    text_emb=st.session_state['Florence'].predict(text_keys,application='text')
                    result=search(text_emb,k=12)
                    st.session_state['url_img_list'] = [x['URL'] for i,x in enumerate(result) if x['@search.score']>=0]
 
-                elif not loadimg and keywords != '':
+                elif not loading and keywords != '':
                    text_emb=st.session_state['Florence'].predict(keywords,application='text')
                    result=search(text_emb,k=12)
                    st.session_state['url_img_list']=[x['URL'] for i,x in enumerate(result) if x['@search.score']>=0]
@@ -136,7 +136,7 @@ def main():
 
          except:
             st.warning("An issue arose. Maybe there's a problem with the search text or image \n ")
-            if loadimg:
+            if loading:
                st.warning("If you don't insert an image, disable the Load Image flag")
             pass
     else:
